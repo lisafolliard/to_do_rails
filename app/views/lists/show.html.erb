@@ -17,15 +17,13 @@
       </li>
     <% end %>
 
-    <% @list.tasks.each do |task| %>
-      <% if task.done %>
+    <% @list.tasks.done.each do |task| %>
       <li>
         <strike><%= task.description %></strike> |
         <%= link_to "Delete", list_task_path(@list, task),
                                  :data => {:confirm => "Are you sure?",
                                                 :method => "delete"} %>
       </li>
-      <% end %>
     <% end %>
   </ul>
 <% else %>
