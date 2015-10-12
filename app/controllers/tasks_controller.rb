@@ -28,6 +28,14 @@ class TasksController < ApplicationController
     end
   end
 
+
+  def mark_complete
+    @task = Task.find(params[:id])
+    @task.update_attribute(:done, true)
+    redirect_to list_path(@task.list)
+  end
+
+
   def destroy
     @list = List.find(params[:list_id])
     @task = Task.find(params[:id])
@@ -37,6 +45,6 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:description)
+    params.require(:task).permit(:description, :done)
   end
 end

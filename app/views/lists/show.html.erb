@@ -4,14 +4,28 @@
   <h4>Here are the tasks for this list:</h4>
 
   <ul>
-    <% @list.tasks.each do |task| %>
+    <% @list.tasks.not_done.each do |task| %>
       <li>
         <%= task.description %> |
         <%= link_to "Edit", edit_list_task_path(@list, task) %> |
         <%= link_to "Delete", list_task_path(@list, task),
                                  :data => {:confirm => "Are you sure?",
+                                                :method => "delete"} %> |
+        <%= link_to "Done", mark_complete_list_task_path(@list, task),
+                                 :data => {:confirm => "Are you sure?",
+                                                :method => "update"} %>
+      </li>
+    <% end %>
+
+    <% @list.tasks.each do |task| %>
+      <% if task.done %>
+      <li>
+        <strike><%= task.description %></strike> |
+        <%= link_to "Delete", list_task_path(@list, task),
+                                 :data => {:confirm => "Are you sure?",
                                                 :method => "delete"} %>
       </li>
+      <% end %>
     <% end %>
   </ul>
 <% else %>
